@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 
-const Home = ({startLogin}) =>
+const Home = ({startLogin})=>
 {
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
