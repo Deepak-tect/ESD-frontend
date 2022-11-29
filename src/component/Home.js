@@ -9,20 +9,20 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const Home = ({startLogin})=>
 {
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [Year_passing, setPassingYear] = useState("");
-  const [ID, setRoll] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [graduation_year, setPassingYear] = useState("");
+  const [roll_number, setRoll] = useState("");
    
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const credentials = {
-      FirstName , LastName , Year_passing , ID
+      first_name , last_name , graduation_year , roll_number
     }
-    console.log({FirstName , LastName , Year_passing, ID})
-  
+    // console.log(first_name , last_name , graduation_year, roll_number)
+    // console.log(credentials)
     startLogin(credentials)
 
     
@@ -57,17 +57,17 @@ const Home = ({startLogin})=>
 
 
           <FormGroup row>
-            <Label for="FirstName"sm={4} >
-              Student ID
+            <Label for="first_name"sm={4} >
+              Student roll_number
             </Label>
             <Col sm={10}>
             <Input
-              id="ID"
-              name="ID"
-              placeholder="Student ID"
+              id="roll_number"
+              name="roll_number"
+              placeholder="Student roll_number"
               type="text"
               backgroundColor = "#D4EBFA"
-              value={ID}
+              value={roll_number}
               onChange = {(e) => setRoll(e.target.value)}
               />
             </Col>
@@ -75,17 +75,17 @@ const Home = ({startLogin})=>
             
             
             <FormGroup row>
-            <Label for="FirstName"sm={4} >
+            <Label for="first_name"sm={4} >
                 First Name
             </Label>
             <Col sm={10}>
             <Input
               id="First_Name"
-              name="FirstName"
+              name="first_name"
               placeholder="First Name"
               type="text"
               backgroundColor = "#D4EBFA"
-              value={FirstName}
+              value={first_name}
               onChange = {(e) => setFirstName(e.target.value)}
               />
             </Col>
@@ -93,7 +93,7 @@ const Home = ({startLogin})=>
 
             <FormGroup row>
             <Label
-              for="LastName"
+              for="last_name"
               sm={4}
             >
               Last Name
@@ -103,8 +103,8 @@ const Home = ({startLogin})=>
                 id="Last_Name"
                 placeholder="Last Name"
                 type="text"
-                name="LastName"
-                value={LastName}
+                name="last_name"
+                value={last_name}
                 onChange = {(e) => setLastName(e.target.value)}
                 
               />
@@ -112,16 +112,16 @@ const Home = ({startLogin})=>
             </FormGroup>
 
             <FormGroup row>
-              <Label for="Year_passing" sm={4}>
+              <Label for="graduation_year" sm={4}>
                 Year Of Passing
               </Label>
               <Col sm={10}>
               <Input
-                id="Year_Passing"
+                id="graduation_year"
                 placeholder="Year Of Passing"
                 type="number"
-                name="Year_Passing"
-                value={Year_passing}
+                name="graduation_year"
+                value={graduation_year}
                 onChange = {(e) => setPassingYear(e.target.value)}
                 
               />

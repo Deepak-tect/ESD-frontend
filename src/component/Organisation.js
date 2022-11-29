@@ -80,7 +80,7 @@ function Organisation({startLogin}) {
         // }
         // if(id !== null){
         //     data[index]['organisationID'] = id;
-        // }
+        // }    
         data[index][event.target.name] = event.target.value
         setOrganisationField(data)
     }
@@ -177,7 +177,7 @@ function Organisation({startLogin}) {
                                                     <Label for="EmpID">
                                                         Company Name
                                                     </Label>
-                                                    <Input bsSize="sm" className="mb-3" type="select" name="organisationName" onChange={event => handleFormChange(event, index)}
+                                                    <Input bsSize="bm" className="mb-3" type="select" name="organisationName" onChange={event => handleFormChange(event, index)}
                                                     value={form.organisationName} >
                                                         {/* <option> nhs</option>
                                                         <option> nhs</option>
@@ -256,7 +256,7 @@ function Organisation({startLogin}) {
                                     </Col>
                                 </Row>
                                 
-                                <FormGroup check>
+                                <FormGroup>
                                     <Label for="position">
                                                 Postion
                                             </Label>

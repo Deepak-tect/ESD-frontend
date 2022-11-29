@@ -5,6 +5,7 @@ import loginService from './service/login';
 import Applicationlo from './service/ApplicationSer';
 import OrgService from './service/orgServic'
 
+
 import { ToastContainer, toast } from 'react-toastify';
 
 import { BrowserRouter as Router, 
@@ -18,6 +19,8 @@ import { BrowserRouter as Router,
 import Notification from './component/Notification';
 import Application from './component/Application'
 import Organisation from './component/Organisation';
+import Alumni from './component/Alumni'
+import ALumniSer from './service/AlumniSer'
 import {  Button  } from 'reactstrap';
 
 
@@ -26,15 +29,46 @@ const App = () =>
 {
 
   const [ user, setUser ] = useState(null)
+  const [alu , setAlu] =useState(null)
   const [ Edu, setEdu ] = useState(null)
+  const [ org, setorg ] = useState(null)
   // const [ notification, setNotification ] = useState(null)
   // const [ notificationType, setNotificationType ] = useState(null)
 
 
   const handleLogin =  async (credentials) => {
     try {
+      // console.log("inside final handlelogin1");
+      // console.log(credentials + "creds from handleLogin")
       const userObject = await loginService.login(credentials)
+      // console.log("inside final handlelogin2");
       setUser(userObject)
+      // console.log("inside final handlelogin3");
+      setAlu(userObject)
+      // console.log("inside final handlelogin4");
+      window.localStorage.setItem('loggedInUser', JSON.stringify(userObject)) 
+      toast("LOGIN SUCCESSFULLY")
+      
+      
+    }
+    catch (exception) {
+      toast("Log in failed, check username and password entered")
+      // notificationHandler(`Log in failed, check username and password entered`, 'error')
+    }
+  }
+
+  const handleAlumni =  async (credentials) => {
+    try {
+      console.log("inside final handlelogin1");
+      console.log(credentials + "creds from handleAlumni")
+      const userObject = await ALumniSer.Alumnilogin(credentials)
+      console.log("inside final handleALumni2");
+      setUser(userObject)
+      setAlu(null)
+      setorg(userObject)
+      console.log("inside final handleALumni3");
+      // setAlu(userObject)
+      console.log("inside final handleALumni4");
       window.localStorage.setItem('loggedInUser', JSON.stringify(userObject)) 
       toast("LOGIN SUCCESSFULLY")
       
@@ -50,7 +84,8 @@ const App = () =>
     try {
       const userObject = await Applicationlo.Applicationlogin(credentials)
       setEdu(userObject)
-      window.localStorage.setItem('loggedInUser', JSON.stringify(userObject)) 
+      setorg(null)
+      // window.localStorage.setItem('loggedInUser', JSON.stringify(userObject)) 
       toast("EDUCATION DETAIL ADDED SUCCESSFULLY")
       // notificationHandler(`successfully Added Education as ${userObject.firstName}`, 'success')
       
@@ -101,13 +136,17 @@ const App = () =>
       <ToastContainer />
     {/* <Notification notification={notification} type={notificationType} /> */}
     {
-    user === null && <Home startLogin = {() => handleLogin()} />
+    user === null && <Home startLogin = {handleLogin} />
     }
     {
-    user !== null && <Application startLogin = {() => handleSubmit()}/>   
+       user !== null && alu !==null && <Alumni startLogin = {handleAlumni}/>
     }
     {
-     Edu !== null && <Organisation startLogin = {() => handleSubmitOrg()}/>
+      user !== null && org !==null && <Application startLogin = {handleSubmit}/>
+    
+    }
+    {
+      org ===null && Edu !== null && <Organisation startLogin = {handleSubmitOrg}/>
     }
 
 
