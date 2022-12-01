@@ -6,8 +6,8 @@ const loginBaseUrl = `http://localhost:8080/api/student/get`
 
 const login =  async(credentials) => {
 
-  // console.log("in axios top")
-  // console.log(credentials + "LOgoin creds")
+  console.log("in axios top")
+  console.log(credentials + "LOgoin creds")
   const response = await axios.post(loginBaseUrl, credentials)
   // console.log("in axios bottom")
  

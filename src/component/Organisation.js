@@ -1,12 +1,46 @@
+// https://github.com/NirajGujarathi/OAES_QuestionBank/blob/microservice/frontend/src/components/ItemForm.js
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, Label, Input, Col, Row, Button  } from 'reactstrap';
 
-function Organisation({startLogin}) {
+//const [ selectedCourse, setSelectedCourse ] = useState(-1)
+
+
+// const handleSelectCourse = (event) => {
+//     const courseIdx = event.target.value
+//     // Set selectedCourse option so that its displayed to the user on the frontend
+//     setSelectedCourse(courseIdx)
+//   }
+
+{/* <div className='form-group'>
+        <label>
+          Select Course: <br/>
+          {/* Select Drop Down for choosing Course of the Item being added */}
+    //       <select 
+    //         className='form-select p-2 regular-shadow rounded-lg'
+    //         value={selectedCourse}
+    //         onChange={handleSelectCourse}
+    //       >
+    //         <option value={-1}>Select a Course</option>
+    //         {
+    //           courses.map((c, idx) => 
+    //             <option key={c.courseId} value={idx}>{c.name}</option>
+    //           )
+    //         }
+    //       </select>
+    //     </label>
+    //     </div> 
+    // */}
+
+function Organisation({startLogin,user}) {
 
     const [organisationField, setOrganisationField] = useState([
-        { organisationName: '', EmpID: '' , yearOfJoining:'', leavingYear:'', position:''}
+        { organisationName: '' , joining_year:'', leaving_year:'', position:'',alumni: '',organisation:''}
     ])
+    //organisationName:''
+
+    const [alumni , setTemp] = useState('')
 
     // const [name, setName] = useState("")
 
@@ -25,29 +59,65 @@ function Organisation({startLogin}) {
     const [companyList , setCompanyList] = useState([{'name':" ",'id':" "}])
      useEffect(() =>{
         const fetchList = async() =>{
-        // const response = await axios(" ");
+        const response = await axios("http://localhost:8080/api/organisation/get_all");
 
         // transform 
-        const response = [{
-            "name": "Steve",
-            "id": 43    
-        },{
-            "name": "john",
-            "id": 43    
-        },{
-            "name": "Deepak",
-            "id": 43    
-        },{
-            "name": "lone",
-            "id": 43    
-        }   ]
+        // const response = [{
+        //     "name": "Steve",
+        //     "id": 43    
+        // },{
+        //     "name": "john",
+        //     "id": 43    
+        // },{
+        //     "name": "Deepak",
+        //     "id": 43    
+        // },{
+        //     "name": "lone",
+        //     "id": 43    
+        // }   ]
 
-        const newData = response
-        // const newData = response.data
+        // const newData = response
+
+
+        const newData = response.data
         setCompanyList(newData);
         } ;
         fetchList();
      },[])
+
+     useEffect(() =>{
+        const fetchList = async() =>{
+        console.log("useEffect")
+        console.log(user)
+
+        const response = await axios.post('http://localhost:8080/api/alumni/getAlumniId', user)
+        const newData = response.data
+        console.log(response.data + " resonse.data")
+        console.log(newData + "newData")
+        setTemp(newData)
+        // setEducationField.alumni_org_id(newData)
+        } ;
+        fetchList();
+     },[])
+
+    //  useEffect(() =>{
+    //     const fetchList = async() =>{
+    //     console.log("useEffect")
+    //     console.log(user)
+
+    //     const response = await axios.get(`${}?=${}`)
+    //     // const newData = response.data
+    //     // console.log(response.data + " resonse.data")
+    //     // console.log(newData + "newData")
+    //     // setTemp(newData)
+    
+    //     } ;
+    //     fetchList();
+    //  },[])
+
+
+
+
 
     //  const DropDown = ({i}) => {
     //     <select>
@@ -70,24 +140,38 @@ function Organisation({startLogin}) {
 
     //organisationField[i].orgname
 
-    const handleFormChange = (event, index) => {
+    const handleFormChange = async(event, index) => {
         let data = [...organisationField];
-        // let id
-        // for(let i=0;i<companyList.length;i++){
-        //     if(companyList[i].name === event.target.value){
-        //         id = companyList[i].id;
-        //     }
+        let id
+        for(let i=0;i<companyList.length;i++){
+            if(companyList[i].name === event.target.value){
+                console.log(JSON.stringify(companyList[i]) + "compam list");
+                id = JSON.stringify( companyList[i].org_id);
+                data[index]['organisation'] = companyList[i];
+                // console.log(id + "id")
+                break
+            }
+        }
+        // for(let i=0 ; i<companyList.length;i++){
+        //     if(id !== null && companyList[i].org_id === id ){
+        //         console.log(companyList[i] + "iddddd")
+        //         data[index]['organisation'] = companyList[i];
+        //         break
+        //     } 
         // }
-        // if(id !== null){
-        //     data[index]['organisationID'] = id;
-        // }    
+        
+        // const burl='http://localhost:8080/api/organisation/getOrg'
+        // const response = await axios.get(`${burl}?name=${event.target[}`)
+        // const newData = response.data
+        // data[index]["organisation"] = newData
+        data[index]["alumni"] = alumni
         data[index][event.target.name] = event.target.value
         setOrganisationField(data)
     }
 
     const addFields = () => {
         let object = {
-            organisationName: '', EmpID: '' , yearOfJoining:'', leavingYear:'', position:''
+            organisationName: '', EmpID: '' , joining_year:'', leaving_year:'', position:''
         }
         setOrganisationField([...organisationField, object])
     }
@@ -100,12 +184,41 @@ function Organisation({startLogin}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
-        const credentials = {
-            ...organisationField
 
+        const credentials = []
+
+         for(var i = 0 ; i< organisationField.length ;i++){
+            // console.log(EducationField[i])
+            // console.log("hi")
+            // console.log(JSON.stringify(organisationField[i]) + "iiiiiiiiiii")
+            // if(JSON.stringify(organisationField[i]) === "organisationName"){
+            //     continue;
+            // }
+            // for(let i=0;i<x.length;i++) {
+            //     y.push({
+            //         a: x[i].a,
+            //         b: x[i].b,
+            //         c: x[i].c
+            //     })
+            // }
+
+            credentials.push({
+                joining_year: organisationField[i].joining_year,
+                leaving_year: organisationField[i].leaving_year,
+                position: organisationField[i].position,
+                organisation: organisationField[i].organisation,
+                alumni:organisationField[i].alumni,
+            })
          }
-        console.log(...organisationField)
+        //  delete credentials["organisationName"]
+        // const credentials = {
+        //     ...organisationField
+
+        //  }
+        // const y = []
+        // for(const f of organizationField) {
+        //     y.push({joining_year: f.joinjng year, leaving_year: f.leaving_year, position: f.position})
+        console.log(credentials)
       
         startLogin(credentials)
     
@@ -192,20 +305,18 @@ function Organisation({startLogin}) {
                                                             ))
                                                         }
                                                            
-                                                        
-                                                        
-                                                        
-                                                    
-                                                    
-                                                    
-                                               
+                                
          
                                                     </Input>
                                                 </FormGroup>
 
                                             </Col>
+                                            {/* <Col md={6}>
+                                                <button> Submit </button>
+                                            </Col> */}
+
                                             
-                                            <Col md={6}>
+                                            {/* <Col md={6}>
                                                 <FormGroup>
                                                 <Label for="EmpID">
                                                     Employee ID
@@ -218,22 +329,22 @@ function Organisation({startLogin}) {
                                                     value={form.EmpID}
                                                 />
                                                 </FormGroup>
-                                            </Col>
+                                            </Col> */}
                                 </Row>
 
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label for="yearOfJoining">
+                                            <Label for="joining_year">
                                                 Year Of Joining
                                             </Label>
                                             <Input
-                                                id="yearOfJoining"
-                                                name="yearOfJoining"
+                                                id="joining_year"
+                                                name="joining_year"
                                                 placeholder="Enter Your Joining Year"
                                                 type="number"
                                                 onChange={event => handleFormChange(event, index)}
-                                                value={form.yearOfJoining}
+                                                value={form.joining_year}
                                             />
                                         </FormGroup>
 
@@ -245,12 +356,12 @@ function Organisation({startLogin}) {
                                                 Year Of Leaving
                                             </Label>
                                             <Input
-                                                id="leavingYear"
-                                                name="leavingYear"
+                                                id="leaving_year"
+                                                name="leaving_year"
                                                 placeholder="Enter Your Leaving Year"
                                                 type="number"
                                                 onChange={event => handleFormChange(event, index)}
-                                                value={form.leavingYear}
+                                                value={form.leaving_year}
                                             />
                                         </FormGroup>
                                     </Col>

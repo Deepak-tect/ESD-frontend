@@ -7,10 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 
-const Alumni = ({startLogin})=>
+const Alumni = ({startLogin , user})=>
 {
   const [email, setEmail] = useState("");
   const [contact_number, setcontact] = useState("");
+  const [student, setID] = useState(user);
+
+
 
    
 
@@ -18,9 +21,10 @@ const Alumni = ({startLogin})=>
     e.preventDefault();
 
     const credentials = {
-        email , contact_number 
+      email , contact_number , student       
     }
-    console.log(email , contact_number)
+    
+    console.log(email , contact_number ,student)
     console.log(credentials)
     startLogin(credentials)
 
@@ -52,6 +56,23 @@ const Alumni = ({startLogin})=>
 
 
           <Form onSubmit={handleSubmit} >
+
+          {/* <FormGroup row>
+            <Label for="email"sm={4} >
+              Student Id
+            </Label>
+            <Col sm={10}>
+            <Input
+              id="student_id"
+              name="student_id"
+              placeholder="Enter ID"
+              type="text"
+              backgroundColor = "#D4EBFA"
+              value={student_id}
+              onChange = {(e) => setID(e.target.value)}
+              />
+            </Col>
+            </FormGroup> */}
 
 
           <FormGroup row>

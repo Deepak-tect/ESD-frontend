@@ -1,27 +1,46 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, FormGroup, Label, Input, Col, Row, Button ,Switch } from 'reactstrap';
-
+import axios from "axios";
 // import {useHistory} from "react-router-dom";
 
-function Application({startLogin}) {
+function Application({startLogin , user}) {
 
     // let history = useHistory();
 
     const [EducationField, setEducationField] = useState([
-        { collegeName: '', degree: '', joiningYear: '', passingyear: '', address: '' }
+        { collegeName: '', degree: '', joining_year: '', passingyear: '', address: '' ,alumni: ''}
     ])
+
+    const [alumni , setTemp] = useState('')
+    const [arr ,setArr] = useState([])
+
+    useEffect(() =>{
+        const fetchList = async() =>{
+        console.log("useEffect")
+        console.log(user)
+
+        const response = await axios.post('http://localhost:8080/api/alumni/getAlumniId', user)
+        const newData = response.data
+        console.log(response.data + " resonse.data")
+        console.log(newData + "newData")
+        setTemp(newData)
+        // setEducationField.alumni_org_id(newData)
+        } ;
+        fetchList();
+     },[])
 
     
 
     const handleFormChange = (event, index) => {
         let data = [...EducationField];
+        data[index]["alumni"] = alumni
         data[index][event.target.name] = event.target.value
         setEducationField(data)
     }
 
     const addFields = () => {
         let object = {
-            collegeName: '', degree: '', joiningYear: '', passingyear: '', address: ''
+            collegeName: '', degree: '', joining_year: '', passingyear: '', address: ''
         }
         setEducationField([...EducationField, object])
     }
@@ -40,26 +59,22 @@ function Application({startLogin}) {
     const handleSubmit = (e) => {
         e.preventDefault();
     
-        const credentials = {
+        const credentials = []
 
-            ...EducationField
-
+         for(var i = 0 ; i< EducationField.length ;i++){
+            // console.log(EducationField[i])
+            // console.log("hi")
+            credentials.push(EducationField[i])
          }
-        //  for(var i = 0 ; i< EducationField.length ;i++){
-        //     console.log(EducationField[i])
-        //     console.log("hi")
-            
-        //  }
         
-        console.log(...EducationField)
+        // console.log(EducationField)
+        // console.log(alumni + "check alumni")
       
         startLogin(credentials)
     
         
     
-        setEducationField(['']);
-        
-        ; 
+        setEducationField([''])
       }
 
 
@@ -121,16 +136,16 @@ function Application({startLogin}) {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label for="joiningYear">
+                                            <Label for="joining_year">
                                                 Year Of Joining
                                             </Label>
                                             <Input
-                                                id="joiningYear"
-                                                name="joiningYear"
+                                                id="joining_year"
+                                                name="joining_year"
                                                 placeholder="Enter Your Joining Year"
                                                 type="number"
                                                 onChange={event => handleFormChange(event, index)}
-                                                value={form.joiningYear}
+                                                value={form.joining_year}
                                             />
                                         </FormGroup>
 
