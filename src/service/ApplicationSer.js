@@ -8,13 +8,13 @@ const Applicationlogin =  async(credentials) => {
 
 // console.log(JSON.stringify(credentials) + "application cread")
 // console.log(credentials)
-// const response = await axios.post(loginBaseUrl, credentials)
-// // const response = await axios.post(loginBaseUrl, [{}])
+const response = await axios.post(loginBaseUrl, credentials)
+// const response = await axios.post(loginBaseUrl, [{}])
  
 // console.log(response.data)
-//   return response.data
+  return response.data
 
-  return { 'name': 'DEEPAK', 'lastName': 'aa','year': 52 }
+  // return { 'name': 'DEEPAK', 'lastName': 'aa','year': 52 }
   
 }
 

@@ -70,12 +70,12 @@ const App = () =>
       // setAlu(userObject)
       console.log("inside final handleALumni4");
       window.localStorage.setItem('loggedInUser', JSON.stringify(userObject)) 
-      toast("LOGIN SUCCESSFULLY")
+      toast("ALUMNI DETAIL ADDED SUCCESSFULLY")
       
       
     }
     catch (exception) {
-      toast("Log in failed, check username and password entered")
+      toast("ENTER THE ALUMNI DETAIL")
       // notificationHandler(`Log in failed, check username and password entered`, 'error')
     }
   }

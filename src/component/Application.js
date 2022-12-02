@@ -8,7 +8,7 @@ function Application({startLogin , user}) {
     // let history = useHistory();
 
     const [EducationField, setEducationField] = useState([
-        { collegeName: '', degree: '', joining_year: '', passingyear: '', address: '' ,alumni: ''}
+        { college_name: '', degree: '', joining_year: '', passing_year: '', address: '' ,alumni: ''}
     ])
 
     const [alumni , setTemp] = useState('')
@@ -40,7 +40,7 @@ function Application({startLogin , user}) {
 
     const addFields = () => {
         let object = {
-            collegeName: '', degree: '', joining_year: '', passingyear: '', address: ''
+            college_name: '', degree: '', joining_year: '', passing_year: '', address: ''
         }
         setEducationField([...EducationField, object])
     }
@@ -101,16 +101,16 @@ function Application({startLogin , user}) {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label for="collegeName">
+                                            <Label for="college_name">
                                                 College Name
                                             </Label>
                                             <Input
                                                 id="exampleEmail"
-                                                name="collegeName"
+                                                name="college_name"
                                                 placeholder="Your School/College Name"
                                                 type="text"
                                                 onChange={event => handleFormChange(event, index)}
-                                                value={form.collegeName}
+                                                value={form.college_name}
                                             />
                                         </FormGroup>
 
@@ -153,16 +153,16 @@ function Application({startLogin , user}) {
                                     </Col>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label for="passingyear">
+                                            <Label for="passing_year">
                                                 Year Of Passing
                                             </Label>
                                             <Input
-                                                id="passingyear"
-                                                name="passingyear"
+                                                id="passing_year"
+                                                name="passing_year"
                                                 placeholder="Enter Your Passing Year"
                                                 type="number"
                                                 onChange={event => handleFormChange(event, index)}
-                                                value={form.passingyear}
+                                                value={form.passing_year}
                                             />
                                         </FormGroup>
                                     </Col>

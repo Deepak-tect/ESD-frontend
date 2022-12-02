@@ -58,13 +58,13 @@ const Home = ({startLogin})=>
 
           <FormGroup row>
             <Label for="first_name"sm={4} >
-              Student roll_number
+              Roll number
             </Label>
             <Col sm={10}>
             <Input
               id="roll_number"
               name="roll_number"
-              placeholder="Student roll_number"
+              placeholder="Student roll number"
               type="text"
               backgroundColor = "#D4EBFA"
               value={roll_number}
